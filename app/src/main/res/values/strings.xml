@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">低腹压健身</string>
+    <string name="home">首页</string>
+    <string name="history">训练记录</string>
+    <string name="settings">设置</string>
+    <string name="sets">组数</string>
+    <string name="reps">次数</string>
+    <string name="rest_time">组间休息</string>
+    <string name="seconds">秒</string>
+    <string name="start_timer">开始计时</string>
+    <string name="stop_timer">停止</string>
+    <string name="reset">重置</string>
+    <string name="save_record">保存记录</string>
+    <string name="no_records">暂无训练记录</string>
+    <string name="safety_title">安全提示</string>
+    <string name="safety_content">1. 全程保持自然呼吸，不要憋气\n2. 动作控制、缓慢完成\n3. 如有胸痛、头晕、心悸加重，立即停止\n4. 不要在饭后1小时内运动\n5. 建议穿平底鞋或赤脚在垫子上进行</string>
+    <string name="got_it">知道了</string>
+    <string name="default_rest">默认组间休息</string>
+    <string name="default_sets">默认组数</string>
+    <string name="default_reps">默认次数</string>
+    <string name="reset_records">重置训练记录</string>
+    <string name="confirm_reset">确定要删除所有训练记录吗？</string>
+    <string name="confirm">确定</string>
+    <string name="cancel">取消</string>
+    <string name="completed">完成</string>
+    <string name="current_set">当前组</string>
+    <string name="set_complete">本组完成！休息中</string>
+    <string name="all_complete">全部完成！</string>
+    <string name="delete">删除</string>
+</resources>
