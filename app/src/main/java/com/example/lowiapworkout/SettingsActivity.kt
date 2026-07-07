@@ -1,15 +1,10 @@
 package com.example.lowiapworkout
 
 import android.os.Bundle
-import android.widget.RadioButton
-import android.widget.RadioGroup
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
-import com.example.lowiapworkout.data.AppDatabase
+import com.example.lowiapworkout.data.RecordStorage
 import com.example.lowiapworkout.databinding.ActivitySettingsBinding
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
 
 class SettingsActivity : AppCompatActivity() {
 
@@ -85,9 +80,7 @@ class SettingsActivity : AppCompatActivity() {
             AlertDialog.Builder(this)
                 .setTitle(getString(R.string.confirm_reset))
                 .setPositiveButton(getString(R.string.confirm)) { _, _ ->
-                    CoroutineScope(Dispatchers.IO).launch {
-                        AppDatabase.getInstance(this@SettingsActivity).recordDao().deleteAllRecords()
-                    }
+                    RecordStorage(this).deleteAllRecords()
                 }
                 .setNegativeButton(getString(R.string.cancel), null)
                 .show()

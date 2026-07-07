@@ -8,16 +8,15 @@ import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.lowiapworkout.data.AppDatabase
 import com.example.lowiapworkout.data.Exercise
 import com.example.lowiapworkout.data.ExerciseData
+import com.example.lowiapworkout.data.RecordStorage
 import com.example.lowiapworkout.data.TrainingRecord
 import com.example.lowiapworkout.databinding.ActivityDetailBinding
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 
 class ExerciseDetailActivity : AppCompatActivity() {
 
@@ -32,11 +31,14 @@ class ExerciseDetailActivity : AppCompatActivity() {
     private var elapsedSeconds = 0L
     private var timer: CountDownTimer? = null
     private var elapsedTimer: kotlinx.coroutines.Job? = null
+    private lateinit var recordStorage: RecordStorage
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityDetailBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        recordStorage = RecordStorage(this)
 
         val exerciseId = intent.getStringExtra("exercise_id")
         exercise = ExerciseData.getExerciseById(exerciseId ?: "")
@@ -105,7 +107,7 @@ class ExerciseDetailActivity : AppCompatActivity() {
             while (timerRunning) {
                 updateTimerDisplay(elapsedSeconds)
                 elapsedSeconds++
-                    delay(1000)
+                delay(1000)
             }
         }
     }
@@ -154,7 +156,6 @@ class ExerciseDetailActivity : AppCompatActivity() {
         timerRunning = false
         elapsedTimer?.cancel()
         timer?.cancel()
-
         completeSet()
     }
 
@@ -177,16 +178,10 @@ class ExerciseDetailActivity : AppCompatActivity() {
             reps = reps,
             durationSeconds = elapsedSeconds
         )
-
-        CoroutineScope(Dispatchers.IO).launch {
-            val db = AppDatabase.getInstance(this@ExerciseDetailActivity)
-            db.recordDao().insertRecord(record)
-            withContext(Dispatchers.Main) {
-                Toast.makeText(this@ExerciseDetailActivity, "记录已保存", Toast.LENGTH_SHORT).show()
-                binding.btnSaveRecord.visibility = View.GONE
-                finish()
-            }
-        }
+        recordStorage.insertRecord(record)
+        Toast.makeText(this, "记录已保存", Toast.LENGTH_SHORT).show()
+        binding.btnSaveRecord.visibility = View.GONE
+        finish()
     }
 
     override fun onDestroy() {
